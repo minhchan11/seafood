@@ -87,7 +87,7 @@ namespace Seafood.Controllers
             content.About = info.About;
             content.MainImage = info.MainImage;
             _db.SaveChanges();
-            return View("Index","Home");
+            return RedirectToAction("Index","Home");
         }
     }
 }
