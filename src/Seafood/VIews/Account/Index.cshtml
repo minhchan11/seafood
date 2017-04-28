@@ -9,7 +9,7 @@
 @if (User.Identity.IsAuthenticated)
 {
     <div class="panel panel-success">
-        <div class="panel-heading">Tools</div>
+        <div class="panel-heading">User Tools for @User.Identity.Name</div>
         <div class="panel-body">
             @using (Html.BeginForm("Logoff", "Account"))
             {
@@ -21,6 +21,6 @@
 }
 else
 {
-    <a class="btn btn-info" href="/register">Register</a>
-    <a class="btn btn-success" href="/login">Log In</a>
+    <a class="btn btn-info" href="account/register">Register</a>
+    <a class="btn btn-success" href="account/login">Log In</a>
 }
