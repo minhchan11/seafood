@@ -1,4 +1,5 @@
 ﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Manage User Roles";
 }
 
@@ -12,13 +13,14 @@
     @Html.ValidationSummary(true)
 
     <p>
-        Username : @Html.DropDownList("Users")
-        Role Name: @Html.DropDownList("RoleName")
+        Username : @Html.TextBox("UserName")
+        Role Name: @Html.DropDownList("Roles")
 
     </p>
 
     <input type="submit" value="Save" />
 }
+
 <hr />
 <h3>Get Roles for a User</h3>
 @using (Html.BeginForm("GetRoles", "Roles"))
@@ -53,7 +55,7 @@
 
     <p>
         Username : @Html.DropDownList("Users")
-        Role Name: @Html.DropDownList("RoleName")
+        Role Name: @Html.DropDownList("Roles")
     </p>
 
     <input type="submit" value="Delete this user from Role" />

@@ -4,27 +4,30 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Seafood.Models;
 using Seafood.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Seafood.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        public ApplicationDbContext _db;
+        public UserManager<ApplicationUser> _userManager;
+        public SignInManager<ApplicationUser> _signInManager;
 
         public AccountController (ApplicationDbContext db, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _db = db;
-            _userManager = userManager;
-            _signInManager = signInManager;
+            this._userManager = userManager;
+            this._signInManager = signInManager;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var content = _db.Infos.FirstOrDefault(info => info.Id == 1);
+            return View(content);
         }
 
         public IActionResult Register()
@@ -63,7 +66,8 @@ namespace Seafood.Controllers
             }
             else
             {
-                ViewBag.message = "Please re-enter";               return View();
+                ViewBag.message = "Please re-enter";
+                return View();
             }
         }
 
@@ -72,6 +76,18 @@ namespace Seafood.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Info info)
+        {
+            var content = _db.Infos.FirstOrDefault(infos => infos.Id == 1);
+            _db.Infos.Attach(content);
+            content.Title = info.Title;
+            content.About = info.About;
+            content.MainImage = info.MainImage;
+            _db.SaveChanges();
+            return View("Index","Home");
         }
     }
 }

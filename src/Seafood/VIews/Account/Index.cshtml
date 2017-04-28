@@ -1,10 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Admin";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
  
 @using System.Security.Claims
-
+@model Seafood.Models.Info
 <h5>Admin Page</h5>
 @if (User.Identity.IsAuthenticated)
 {
@@ -14,10 +14,28 @@
             @using (Html.BeginForm("Logoff", "Account"))
             {
                 <input type="submit" class="btn btn-primary" value="Log off" />
-                <p>@Html.ActionLink("Roles", "Index", "Roles")</p>
+                <button class="btn btn-info">@Html.ActionLink("Roles", "Index", "Roles")</button>
             }
         </div>
     </div>
+
+    <div class="panel panel-secondary">
+        <div class="panel-heading">Edit Main Content</div>
+        <div class="panel-body">
+            @using (Html.BeginForm("Edit", "Account"))
+            {
+                <label>Title:</label>
+                <h4> @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })</h4>
+
+                <label>Main Image:</label>
+                <h4> @Html.EditorFor(model => model.MainImage, new { htmlAttributes = new { @class = "form-control" } })</h4>
+                <label>About:</label>
+                <h4> @Html.EditorFor(model => model.About, new { htmlAttributes = new { @class = "form-control" } })</h4>
+                <input type="submit" class="btn btn-success" value="Save Edit">
+            }
+        </div>
+    </div>
+
 }
 else
 {

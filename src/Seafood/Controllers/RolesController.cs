@@ -11,18 +11,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Seafood.Controllers
 {
     [Authorize]
     public class RolesController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        public ApplicationDbContext _db;
+        public UserManager<ApplicationUser> _userManager;
 
-        public RolesController(ApplicationDbContext db)
+        public RolesController(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             _db = db;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -84,13 +85,38 @@ namespace Seafood.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Manage()
+        public IActionResult Assign()
         {
             ViewBag.Roles = new SelectList(_db.Roles, "Id", "Name");
-            ViewBag.Users = new SelectList(_db.Users, "Id", "Name");
+            ViewBag.Users = new SelectList(_db.Users, "Id", "UserName");
             return View();
         }
 
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> AddRole(string UserName, string RoleName)
+        //{
+        //    ApplicationUser user = _db.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+        //    var account = new RolesController(_db, _userManager);
+        //    //var user = await account._userManager.FindByNameAsync(UserName);
+        //    //await account._userManager.AddToRoleAsync(user, RoleName);
 
+        //    ViewBag.ResultMessage = "Role created successfully !";
+        //    return View("Assign");
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> GetRoles(string UserName)
+        //{
+        //    if (!string.IsNullOrWhiteSpace(UserName))
+        //    {
+        //        var account = new AccountController(_db, _userManager, _signInManager);
+
+        //        ViewBag.RolesForThisUser = await account._userManager.GetRolesAsync(await _userManager.FindByNameAsync(UserName));
+        //    }
+
+        //    return View("Assign");
+        //}
     }
 }

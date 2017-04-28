@@ -23,6 +23,6 @@ namespace Seafood.Models
             base.OnModelCreating(builder);
         }
         public DbSet<Mail> Mails { get; set; }
-
+        public DbSet<Info> Infos { get; set; }
     }
 }

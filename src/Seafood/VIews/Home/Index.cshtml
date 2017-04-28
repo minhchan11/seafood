@@ -2,9 +2,9 @@
     ViewData["Title"] = "Welcome to Seattle Seafood";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model Seafood.Models.Info
 
-<h5>Main page</h5>
 
-<h4>Content</h4>
-
-<p>@Html.ActionLink("Admin Page", "Index", "Account")</p>
+<h4>@Model.Title</h4>
+<img src="@Model.MainImage" id="image"/>
+@Html.Raw(@Model.About)

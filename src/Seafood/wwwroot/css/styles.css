@@ -1,3 +1,12 @@
-﻿.wrong {
+﻿@import url('https://fonts.googleapis.com/css?family=Merriweather');
+
+body{
+    font-family: 'Merriweather', serif;
+}
+.wrong {
     color:red;
+}
+
+#image{
+    width:50%;
 }
