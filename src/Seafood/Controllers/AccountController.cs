@@ -27,6 +27,7 @@ namespace Seafood.Controllers
         public IActionResult Index()
         {
             var content = _db.Infos.FirstOrDefault(info => info.Id == 1);
+            ViewBag.mails = _db.Mails.ToList();
             return View(content);
         }
 

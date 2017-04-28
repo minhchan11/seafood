@@ -31,9 +31,38 @@
                 <h4> @Html.EditorFor(model => model.MainImage, new { htmlAttributes = new { @class = "form-control" } })</h4>
                 <label>About:</label>
                 <h4> @Html.EditorFor(model => model.About, new { htmlAttributes = new { @class = "form-control" } })</h4>
-                <input type="submit" class="btn btn-success" value="Save Edit">
+                <input type="submit" class="btn btn-success" value="Edit">
             }
         </div>
+    </div>
+
+    <div class="well">
+        <h5>Mailing List:</h5>
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Would like to know about
+                </th>
+            </tr>
+            @if (ViewData["mails"] != null)
+            {
+                @foreach (var mail in (IEnumerable<Seafood.Models.Mail>)ViewData["mails"])
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => mail.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mail.Preference)
+                        </td>
+                    </tr>
+                }
+
+            }
+        </table>
     </div>
 
 }
