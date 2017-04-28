@@ -50,7 +50,7 @@ namespace Seafood
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Account}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
             app.UseStaticFiles();
             app.Run(async (context) =>
