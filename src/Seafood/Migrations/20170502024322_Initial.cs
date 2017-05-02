@@ -63,6 +63,21 @@ namespace Seafood.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Infos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    About = table.Column<string>(nullable: true),
+                    MainImage = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Infos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Mails",
                 columns: table => new
                 {
@@ -216,6 +231,9 @@ namespace Seafood.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Infos");
 
             migrationBuilder.DropTable(
                 name: "Mails");

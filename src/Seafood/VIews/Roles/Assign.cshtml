@@ -13,9 +13,8 @@
     @Html.ValidationSummary(true)
 
     <p>
-        Username : @Html.TextBox("UserName")
-        Role Name: @Html.DropDownList("Roles")
-
+       Username : @Html.TextBox("UserName")
+       Role Name: @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...")
     </p>
 
     <input type="submit" value="Save" />

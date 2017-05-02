@@ -19,6 +19,7 @@ namespace Seafood.Controllers
     {
         public ApplicationDbContext _db;
         public UserManager<ApplicationUser> _userManager;
+        public RoleManager<IdentityRole> _roleManager;
 
         public RolesController(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
@@ -87,23 +88,29 @@ namespace Seafood.Controllers
 
         public IActionResult Assign()
         {
-            ViewBag.Roles = new SelectList(_db.Roles, "Id", "Name");
+            var list = _db.Roles.OrderBy(r => r.Name).ToList().Select(rr =>new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            ViewBag.Roles = list;
             ViewBag.Users = new SelectList(_db.Users, "Id", "UserName");
             return View();
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> AddRole(string UserName, string RoleName)
-        //{
-        //    ApplicationUser user = _db.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-        //    var account = new RolesController(_db, _userManager);
-        //    //var user = await account._userManager.FindByNameAsync(UserName);
-        //    //await account._userManager.AddToRoleAsync(user, RoleName);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddRole(string UserName, string RoleName)
+        {
+            var user = await _userManager.FindByNameAsync(UserName);
+            //var role = await _roleManager.FindByNameAsync(RoleName);
+            //var userRole = new IdentityUserRole<string>
+            //{
+            //    RoleId = role.Id,
+            //};
+            //user.Roles.Add(userRole);
+            //string roleName = Request.Form["Roles"].ToString();
+            await _userManager.AddToRoleAsync(user, RoleName.ToString());
 
-        //    ViewBag.ResultMessage = "Role created successfully !";
-        //    return View("Assign");
-        //}
+            ViewBag.ResultMessage = "Role created successfully !";
+            return View("Assign");
+        }
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]

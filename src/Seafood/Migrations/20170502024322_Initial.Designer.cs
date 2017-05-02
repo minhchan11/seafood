@@ -8,8 +8,8 @@ using Seafood.Models;
 namespace Seafood.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170428211709_AddInfoTable")]
-    partial class AddInfoTable
+    [Migration("20170502024322_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
