@@ -41,6 +41,7 @@ namespace Seafood.Controllers
         [HttpPost]
         public IActionResult Create(IdentityRole role)
         {
+            role.NormalizedName = role.Name.ToString().ToUpper();
             _db.Roles.Add(role);
             _db.SaveChanges();
             ViewBag.ResultMessage = "Role created successfully";
@@ -88,9 +89,9 @@ namespace Seafood.Controllers
 
         public IActionResult Assign()
         {
-            var list = _db.Roles.OrderBy(r => r.Name).ToList().Select(rr =>new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
-            ViewBag.Roles = list;
-            ViewBag.Users = new SelectList(_db.Users, "Id", "UserName");
+            //var list = _db.Roles.OrderBy(r => r.Name).ToList().Select(rr =>new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            ViewBag.Roles = new SelectList(_db.Roles, "Name");
+            ViewBag.Users = new SelectList(_db.Users, "UserName");
             return View();
         }
 
@@ -99,31 +100,83 @@ namespace Seafood.Controllers
         public async Task<IActionResult> AddRole(string UserName, string RoleName)
         {
             var user = await _userManager.FindByNameAsync(UserName);
-            //var role = await _roleManager.FindByNameAsync(RoleName);
-            //var userRole = new IdentityUserRole<string>
-            //{
-            //    RoleId = role.Id,
-            //};
-            //user.Roles.Add(userRole);
-            //string roleName = Request.Form["Roles"].ToString();
-            await _userManager.AddToRoleAsync(user, RoleName.ToString());
+            await _userManager.AddToRoleAsync(user, RoleName);
 
             ViewBag.ResultMessage = "Role created successfully !";
             return View("Assign");
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> GetRoles(string UserName)
-        //{
-        //    if (!string.IsNullOrWhiteSpace(UserName))
-        //    {
-        //        var account = new AccountController(_db, _userManager, _signInManager);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GetRoles(string UserName)
+        {
+            if (!string.IsNullOrWhiteSpace(UserName))
+            {
+                ViewBag.RolesForThisUser = await _userManager.GetRolesAsync(await _userManager.FindByNameAsync(UserName));
+            }
 
-        //        ViewBag.RolesForThisUser = await account._userManager.GetRolesAsync(await _userManager.FindByNameAsync(UserName));
+            return View("Assign");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteRole(string UserName, string RoleName)
+        {
+            var user = await _userManager.FindByNameAsync(UserName);
+
+            if (await _userManager.IsInRoleAsync(user, RoleName))
+            {
+                await _userManager.RemoveFromRoleAsync(user, RoleName);
+                ViewBag.ResultMessage = "Role removed from this user successfully !";
+            }
+            else
+            {
+                ViewBag.ResultMessage = "This user doesn't belong to selected role.";
+            }
+            // prepopulat roles for the view dropdown
+
+            return View("Assign");
+        }
+
+        //BELOW PARTS ARE FOR MAKING VIEW ONLY FOR ADMIN
+        //public Boolean isAdminUser()
+        //{
+        //    if (User.Identity.IsAuthenticated)
+        //    {
+        //        var user = User.Identity;
+        //        var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+        //        var s = _userManager.GetRolesAync(user.GetUserId());
+        //        if (s[0].ToString() == "Admin")
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    return false;
+        //}
+
+        //public ActionResult Create()
+        //{
+        //    if (User.Identity.IsAuthenticated)
+        //    {
+
+
+        //        if (!isAdminUser())
+        //        {
+        //            return RedirectToAction("Index", "Home");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Index", "Home");
         //    }
 
-        //    return View("Assign");
+        //    var Role = new IdentityRole();
+        //    return View(Role);
         //}
+
     }
 }

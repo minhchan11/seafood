@@ -14,9 +14,8 @@
 
     <p>
        Username : @Html.TextBox("UserName")
-       Role Name: @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...")
+       Role Name: @Html.TextBox("RoleName")
     </p>
-
     <input type="submit" value="Save" />
 }
 
@@ -53,8 +52,8 @@
     @Html.ValidationSummary(true)
 
     <p>
-        Username : @Html.DropDownList("Users")
-        Role Name: @Html.DropDownList("Roles")
+        Username : @Html.TextBox("UserName")
+        Role Name: @Html.TextBox("RoleName")
     </p>
 
     <input type="submit" value="Delete this user from Role" />

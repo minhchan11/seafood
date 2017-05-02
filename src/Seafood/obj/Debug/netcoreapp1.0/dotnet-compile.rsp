@@ -211,8 +211,8 @@ C:\Users\epicodus\Desktop\seafood\src\Seafood\Startup.cs
 C:\Users\epicodus\Desktop\seafood\src\Seafood\Controllers\AccountController.cs
 C:\Users\epicodus\Desktop\seafood\src\Seafood\Controllers\HomeController.cs
 C:\Users\epicodus\Desktop\seafood\src\Seafood\Controllers\RolesController.cs
-C:\Users\epicodus\Desktop\seafood\src\Seafood\Migrations\20170502024322_Initial.cs
-C:\Users\epicodus\Desktop\seafood\src\Seafood\Migrations\20170502024322_Initial.Designer.cs
+C:\Users\epicodus\Desktop\seafood\src\Seafood\Migrations\20170502180903_initial.cs
+C:\Users\epicodus\Desktop\seafood\src\Seafood\Migrations\20170502180903_initial.Designer.cs
 C:\Users\epicodus\Desktop\seafood\src\Seafood\Migrations\ApplicationDbContextModelSnapshot.cs
 C:\Users\epicodus\Desktop\seafood\src\Seafood\Models\ApplicationDbContext.cs
 C:\Users\epicodus\Desktop\seafood\src\Seafood\Models\ApplicationUser.cs
